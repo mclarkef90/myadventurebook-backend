@@ -6,10 +6,10 @@ Rails.application.routes.draw do
         resources :adventures, only: [:index, :create]
         resources :comments, only: [:index]
       end
-      resources :adventures [:index, :update, :destroy, :show] do
+      resources :adventures, only: [:index, :update, :destroy, :show] do
         resources :comments, only: [:index, :create]
       end
-      resources :comments, only [:update, :destory]
+      resources :comments, only: [:update, :destory]
     end
   end
 end

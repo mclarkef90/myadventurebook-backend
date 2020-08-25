@@ -2,11 +2,11 @@ class Api::V1::CommentsController < ApplicationController
 
   def index
     if params[:user_id]
-      user= User.find_by(id: params[:id])
+      user= User.find_by(id: params[:user_id])
       comments= user.comments.all
       render json: comments
-    else params[:adventure_id]
-      adventure= Adventure.find_by(id: params[:id])
+    elsif params[:adventure_id]
+      adventure= Adventure.find_by(id: params[:adventure_id])
       comments= adventure.comments.all
       render json: comments
     end
@@ -14,12 +14,12 @@ class Api::V1::CommentsController < ApplicationController
 
   def create
     #only available as nested route under adventure
-    adventure= Adventure.find_by(id: params[:id])
+    adventure= Adventure.find_by(id: params[:adventure_id])
     comment= adventure.comment.build(comment_params)
     if comment.save
-        render json: comment, status: :accepted
+        render json: comment
       else
-        render json: {errors: comment.errors.full_messages}, status: :unprocessible_entity
+        render json: {error: 'Error Creating Comment'}
     end
   end
 
@@ -27,9 +27,9 @@ class Api::V1::CommentsController < ApplicationController
     comment= Comment.find_by(id: params[:id])
     if comment
       comment.update(comment_params)
-      render json: comment, status: :accepted
+      render json: comment
     else
-      render json: {errors: comment.errors.full_messages}, status: :unprocessible_entity
+      render json: {error: 'Error Updating Comment'}
     end
   end
 
@@ -37,11 +37,13 @@ class Api::V1::CommentsController < ApplicationController
     comment= Comment.find_by(id: params[:id])
     if comment
       comment.destroy
-      render json: comment, status: :accepted
+      render json: comment
     else
-      render json: {errors: comment.errors.full_messages}, status: :unprocessible_entity
+      render json: {error: 'Error Deleting Comment'}
     end
   end
+
+
 
   private
 

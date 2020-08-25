@@ -3,7 +3,6 @@ class Api::V1::AdventuresController < ApplicationController
 
 
   def index
-    binding.pry
     if params[:user_id]
       user= User.find_by(id: params[:user_id])
       adventures= user.adventures.all

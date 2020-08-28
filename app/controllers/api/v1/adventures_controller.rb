@@ -16,9 +16,9 @@ class Api::V1::AdventuresController < ApplicationController
   def create
     #only available as nested route under user
     user= User.find_by(id: params[:user_id])
-    adventure= user.adventure.build(adventure_params)
+    adventure= user.adventures.build(adventure_params)
     if adventure.save
-        render json: adventure
+        render json: user
       else
         render json: {error: 'Error Creating Adventure'}
     end
@@ -26,7 +26,7 @@ class Api::V1::AdventuresController < ApplicationController
 
   def update
     if @adventure
-      adventure.update(adventure)
+      @adventure.update(adventure_params)
       render json: @adventure
     else
       render json: {error: 'Error Updating Adventure'}

@@ -17,7 +17,7 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     if @user
-      user.update(user_params)
+      @user.update(user_params)
       render json: @user
     else
       render json: {error: 'Error Updating User'}
@@ -26,7 +26,7 @@ class Api::V1::UsersController < ApplicationController
 
   def destroy
     if @user
-      user.destroy
+      @user.destroy
       render json: @user
     else
       render json: {error: 'Error Updating User'}

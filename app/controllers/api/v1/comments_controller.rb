@@ -15,9 +15,9 @@ class Api::V1::CommentsController < ApplicationController
   def create
     #only available as nested route under adventure
     adventure= Adventure.find_by(id: params[:adventure_id])
-    comment= adventure.comment.build(comment_params)
+    comment= adventure.comments.build(comment_params)
     if comment.save
-        render json: comment
+        render json: adventure
       else
         render json: {error: 'Error Creating Comment'}
     end

@@ -35,7 +35,7 @@ class Api::V1::AdventuresController < ApplicationController
 
   def destroy
     if @adventure
-      adventure.destroy
+      @adventure.destroy
       render json: @adventure
     else
       render json: {error: 'Error Deleting Adventure'}

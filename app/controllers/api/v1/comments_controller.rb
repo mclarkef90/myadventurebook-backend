@@ -24,11 +24,12 @@ class Api::V1::CommentsController < ApplicationController
 
   def update
     #only available as nested route under adventure
-    adventure= Adventure.find_by(id: params[:adventure_id])
     comment= Comment.find_by(id: params[:id])
     if comment
       comment.update(comment_params)
-      render json: adventure
+      user_id= comment.user_id
+      user= User.find_by(id: user_id)
+      render json: user
     else
       render json: {error: 'Error Updating Comment'}
     end
